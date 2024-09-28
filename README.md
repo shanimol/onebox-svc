@@ -7,9 +7,6 @@ Before starting with the setup process, ensure that you have the following prere
 3. **[PIP](https://pypi.org/project/pip/)**
 4. **[Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)**
 5. **venv ([Python Virtual Environments](https://docs.python.org/3/tutorial/venv.html#introduction))**
-6. **[Node.js](https://nodejs.org/en)**
-7. **[pnpm](https://pnpm.io/)**
-8. **[Rust](https://www.rust-lang.org/) (for [Tauri](https://tauri.app/v1/guides/getting-started/prerequisites))**
 
 #### Installation Steps:
 
