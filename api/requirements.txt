@@ -1,0 +1,16 @@
+uvicorn
+fastapi
+prisma
+pydantic[email]
+redis
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
+kafka-python
+slack_sdk
+langchain
+langchain_community
+langchain_core
+langchain_openai
+langsmith
+qdrant_client

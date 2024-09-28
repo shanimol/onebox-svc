@@ -1,0 +1,148 @@
+generator client {
+    provider             = "prisma-client-py"
+    interface            = "asyncio"
+    recursive_type_depth = 5
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id                   String     @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    name                 String
+    email                String     @unique
+    picture              String?
+    google_token         String?
+    google_refresh_token String?
+    google_token_expiry  DateTime?
+    status               UserStatus
+    slack_id             String?
+    created_at           DateTime   @default(now())
+    updated_at           DateTime   @updatedAt
+}
+
+enum UserStatus {
+    ONBOARDED
+    UNVERIFEID
+}
+
+model MessageLabel {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    meesage_id String
+    label      String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Messages {
+    id           String        @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    message_id   String        @unique
+    user_id      String
+    thread_id    String?
+    channel_id   String?
+    sender_id    String
+    subject      String?
+    body         String
+    date         DateTime
+    service      String?
+    source       MessageSource
+    message_type MessageType?
+    created_at   DateTime      @default(now())
+    updated_at   DateTime      @updatedAt
+}
+
+enum MessageSource {
+    EMAIL
+    SLACK
+}
+
+enum MessageType {
+    PRIVATE
+    CHANNEL
+    MENTION
+}
+
+model EmailThread {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    thread_id  String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Task {
+    id          String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    user_id     String
+    content     String
+    source_type String
+    source_id   String
+    status      String
+    priority    Int
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+}
+
+model Schedule {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    user_id    String
+    task_id    String
+    time       DateTime
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Meeting {
+    id          String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    external_id String   @unique
+    user_id     String
+    name        String
+    start_time  DateTime
+    end_time    DateTime
+    fequency    String
+    description String?
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+}
+
+model Calendar {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    task_id    String
+    time       DateTime
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model MeetingGuests {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    user_id    String
+    meeting_id String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Transcripts {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    user_id    String
+    meeting_id String
+    speaker_id String
+    transcript String?
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Channels {
+    id          String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    external_id String   @unique
+    name        String
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+}
+
+model MessageSummary {
+    id         String   @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+    message_id String
+    summary    String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
